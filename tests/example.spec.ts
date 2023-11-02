@@ -8,6 +8,12 @@ test('has title', async ({ page }) => {
 test('does the modal window open', async ({ page }) => {
   await page.goto('/');
   await page.getByRole('button', { name: 'Связаться с нами' }).first().click();
-  await expect(page.getByRole('heading', {name: 'Обсудим ваш проект?'}).first()).toBeVisible();
+  await page.screenshot({ path: 'screenshot.png' });
+  await expect(page.getByRole('heading', {name: 'Обсудим ваш проект?'}).first()).toBeInViewport()
 });
 
+test('Is postgres information visible', async({page}) => {
+  await page.goto('/');
+  await page.locator(`[name="postgres"]`).first().focus();
+  await expect(page.getByText('Компания разработчик лидирующей СУБД в РФ').first()).toBeVisible()
+})
